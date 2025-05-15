@@ -7,7 +7,11 @@
 
 ## 使用教程
 
-[使用教程](https://mp.weixin.qq.com/s/uOtyp-88iPIfN10szycBvg)
+[文字教程](https://mp.weixin.qq.com/s/uOtyp-88iPIfN10szycBvg)
+
+[Youtube](https://www.youtube.com/watch?v=q_k_0l2zSKA&ab_channel=sailor)
+
+[BiliBili](https://www.bilibili.com/video/BV1n8ErzUEeB)
 
 ## 欢迎关注我
 
