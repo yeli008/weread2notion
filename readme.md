@@ -15,7 +15,7 @@
 
 ## 相关配置信息
 
-[notion 集成申请](https://www.notion.so/profile/integrations)
+[notion 集成申请](https://www.notion.so/profile/integrations)  
 [模板地址](https://sailor0913.notion.site/1f269034c78f8019af2dc928f665bca9?pvs=73)
 
 ## 欢迎关注我
@@ -32,3 +32,12 @@
 | 微信支付                                                                                      | 支付宝支付                                                                                    |
 | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | <div align="center"><img src="https://imgs.freeimg.cn/s/6824fb0dcdea1.png" width="50%"></div> | <div align="center"><img src="https://imgs.freeimg.cn/s/6824fb0dc2a42.jpg" width="50%"></div> |
+
+## 重要更新
+
+- 增加使用 raycast 快速触发 actions 脚本
+
+## 致谢
+
+[obsidian-weread-plugin](https://github.com/zhaohongxuan/obsidian-weread-plugin)  
+[weread2notion](https://github.com/malinkang/weread2notion)
