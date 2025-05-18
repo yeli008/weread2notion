@@ -13,6 +13,11 @@
 
 [BiliBili](https://www.bilibili.com/video/BV1n8ErzUEeB)
 
+## 相关配置信息
+
+[notion 集成申请](https://www.notion.so/profile/integrations)
+[模板地址](https://sailor0913.notion.site/1f269034c78f8019af2dc928f665bca9?pvs=73)
+
 ## 欢迎关注我
 
 > [!IMPORTANT]  
