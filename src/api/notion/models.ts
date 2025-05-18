@@ -161,7 +161,7 @@ export interface BookProperties {
   分类?: {
     rich_text: NotionRichText[];
   };
-  是否读完?: {
+  阅读状态?: {
     select: {
       name: string;
     };

@@ -9,11 +9,23 @@ import {
   BOOKMARKS_API,
   BOOKSHELF_URL,
   BOOK_INFO_URL,
+  BOOK_PROGRESS_API,
   BOOK_THOUGHTS_API,
 } from "../../config/constants";
 import { getHeaders, getHighlightHeaders } from "../../utils/http";
 import { updateCookieFromResponse } from "../../utils/cookie";
-import { RawHighlightsData, RawThoughtsData } from "./models";
+import {
+  ShelfBook,
+  NotebookBook,
+  BookInfo,
+  RawHighlightsData,
+  RawThoughtsData,
+  BookProgressInfo,
+} from "./models";
+import { getBookProgress } from "./book-progress";
+
+// 重新导出getBookProgress函数
+export { getBookProgress };
 
 /**
  * 刷新微信读书会话

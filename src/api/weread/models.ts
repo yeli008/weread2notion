@@ -139,12 +139,32 @@ export interface FormattedHighlight {
  */
 export interface FormattedThought {
   content: string;
-  abstract: string; // 原文
+  abstract?: string;  // 添加原文摘要字段
   range?: string;
   chapterUid: number;
   chapterTitle: string;
   createTime: number;
   createdTime: string;
   reviewId?: string;
-  [key: string]: any; // 其他可能的字段
+}
+
+/**
+ * 书籍阅读进度数据模型
+ */
+export interface BookProgressInfo {
+  bookId: string;
+  book: {
+    progress: number;         // 阅读进度百分比 0-100
+    isStartReading: number;  // 是否开始阅读 0/1
+    readingTime: number;     // 阅读总时长(秒)
+    startReadingTime?: number; // 首次阅读时间戳
+    finishTime?: number;     // 完成阅读时间戳
+    chapterUid?: number;     // 当前章节ID
+    chapterIdx?: number;     // 当前章节索引
+    chapterOffset?: number;  // 章节内偏移量
+    summary?: string;        // 当前阅读位置摘要
+    updateTime?: number;     // 最后更新时间
+    [key: string]: any;      // 其他可能的字段
+  };
+  [key: string]: any;        // 其他可能的字段
 }

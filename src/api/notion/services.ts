@@ -189,12 +189,12 @@ export async function writeBookToNotion(
             },
           ],
         },
-        // 是否读完是select类型
-        是否读完: {
+        // 阅读状态是select类型
+        阅读状态: {
           select: {
-            name:
-              bookData.finishReadingStatus ||
-              (bookData.finishReading ? "已读完" : "未读完"),
+            name: bookData.finishReadingStatus ||
+              (bookData.finishReading ? "✅已读" : 
+              (bookData.progress && bookData.progress > 0 ? "📖在读" : "📕未读")),
           },
         },
       },
