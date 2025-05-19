@@ -166,5 +166,21 @@ export interface BookProperties {
       name: string;
     };
   };
+  // 新增字段 - 开始阅读日期
+  开始阅读?: {
+    date: {
+      start: string;
+    } | null;
+  };
+  // 新增字段 - 完成阅读日期
+  完成阅读?: {
+    date: {
+      start: string;
+    } | null;
+  };
+  // 新增字段 - 阅读总时长
+  阅读总时长?: {
+    rich_text: NotionRichText[];
+  };
   [key: string]: any;
 }

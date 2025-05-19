@@ -9,6 +9,24 @@ import { getNotionHeaders } from "../../utils/http";
 import { BookExistsResult, BookWriteResult } from "./models";
 
 /**
+ * 格式化阅读时间，将秒数转换为可读格式
+ * @param seconds 阅读时间秒数
+ * @returns 格式化后的时间字符串
+ */
+function formatReadingTime(seconds: number): string {
+  if (seconds <= 0) return "未阅读";
+  
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  
+  if (hours > 0) {
+    return `${hours}小时${minutes > 0 ? ` ${minutes}分钟` : ''}`;
+  } else {
+    return `${minutes}分钟`;
+  }
+}
+
+/**
  * 检查书籍是否已存在于Notion数据库中
  */
 export async function checkBookExistsInNotion(
@@ -196,6 +214,27 @@ export async function writeBookToNotion(
               (bookData.finishReading ? "✅已读" : 
               (bookData.progress && bookData.progress > 0 ? "📖在读" : "📕未读")),
           },
+        },
+        // 开始阅读日期 - 如果有startReadingTime则转换为可读日期
+        开始阅读: {
+          date: bookData.progressData?.startReadingTime ? {
+            start: new Date(bookData.progressData.startReadingTime * 1000).toISOString().split('T')[0],
+          } : null,
+        },
+        // 完成阅读日期 - 如果有finishTime则转换为可读日期
+        完成阅读: {
+          date: bookData.progressData?.finishTime ? {
+            start: new Date(bookData.progressData.finishTime * 1000).toISOString().split('T')[0],
+          } : null,
+        },
+        // 阅读总时长 - 转换为小时和分钟格式
+        阅读总时长: {
+          rich_text: [{
+            type: "text",
+            text: {
+              content: bookData.progressData?.readingTime ? formatReadingTime(bookData.progressData.readingTime) : "未记录",
+            },
+          }],
         },
       },
     };
