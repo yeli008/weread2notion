@@ -182,5 +182,9 @@ export interface BookProperties {
   阅读总时长?: {
     rich_text: NotionRichText[];
   };
+  // 新增字段 - 阅读进度数字属性
+  阅读进度?: {
+    number: number;
+  };
   [key: string]: any;
 }

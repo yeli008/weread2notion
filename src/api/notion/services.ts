@@ -236,6 +236,10 @@ export async function writeBookToNotion(
             },
           }],
         },
+        // 阅读进度 - 数字类型，直接使用API返回的progress值
+        阅读进度: {
+          number: bookData.progressData?.progress || bookData.progress || 0,
+        },
       },
     };
 
