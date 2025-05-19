@@ -5,6 +5,18 @@
 - 支持将微信读书划线/想法同步到 Notion
 - 通过 github actions 每天定时同步
 
+## 最终效果
+
+[点我查看在线版](https://sailor0913.notion.site/2025-1f769034c78f8089b130e603c2443e29)
+
+## 截图
+
+画廊
+![画廊](images/画廊.png)
+
+表格
+![表格](images/表格.png)
+
 ## 使用教程
 
 [文字教程](https://mp.weixin.qq.com/s/uOtyp-88iPIfN10szycBvg)
