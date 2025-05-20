@@ -8,6 +8,7 @@ import { syncSingleBook } from "./core/sync/book-sync";
 import { syncAllBooks } from "./core/sync/all-books-sync";
 import { getBrowserCookie } from "./utils/cookie";
 import { refreshSession } from "./api/weread/services";
+import { checkAndMigrateIfNeeded } from "./core/migration";
 
 // 环境变量文件路径
 const ENV_FILE_PATH = ".env";
@@ -38,7 +39,22 @@ async function main() {
     }
 
     // 解析命令行参数
-    const { bookId, syncAll, fullSync } = parseArgs();
+    const { bookId, syncAll, fullSync: cliFullSync } = parseArgs();
+    let fullSync = cliFullSync;
+    
+    // 检查数据库版本并执行必要的迁移
+    try {
+      const needsMigration = await checkAndMigrateIfNeeded(NOTION_API_KEY, DATABASE_ID);
+      
+      // 如果需要迁移，强制使用全量同步模式
+      if (needsMigration) {
+        console.log('检测到数据库版本变更，将强制使用全量同步模式');
+        fullSync = true;
+      }
+    } catch (error: any) {
+      console.error(`数据库版本检查失败: ${error.message}`);
+      console.log('将继续使用原定同步模式');
+    }
 
     console.log(`同步模式: ${fullSync ? "全量" : "增量"}`);
 

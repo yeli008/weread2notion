@@ -6,7 +6,57 @@ import axios, { AxiosError } from "axios";
 import { NOTION_API_BASE_URL, NOTION_VERSION } from "../../config/constants";
 import { NotionBlockType } from "../../config/types";
 import { getNotionHeaders } from "../../utils/http";
-import { BookExistsResult, BookWriteResult } from "./models";
+import { BookProperties, NotionBlock, NotionPage, BookExistsResult, BookWriteResult } from "./models";
+
+/**
+ * 检查Notion数据库是否包含所有必要的属性字段
+ * @param apiKey Notion API密钥
+ * @param databaseId 数据库ID
+ * @param requiredProperties 必要属性字段列表
+ * @returns 缺少的属性字段列表
+ */
+export async function checkDatabaseProperties(
+  apiKey: string,
+  databaseId: string,
+  requiredProperties: string[]
+): Promise<string[]> {
+  console.log(`检查数据库属性: ${databaseId}`);
+  
+  try {
+    // 设置请求头
+    const headers = {
+      Authorization: `Bearer ${apiKey}`,
+      "Notion-Version": NOTION_VERSION,
+      "Content-Type": "application/json",
+    };
+    
+    // 获取数据库信息
+    const response = await axios.get(
+      `${NOTION_API_BASE_URL}/databases/${databaseId}`,
+      { headers }
+    );
+    
+    // 数据库中存在的属性
+    const existingProperties = Object.keys(response.data.properties || {});
+    console.log(`数据库包含以下属性: ${existingProperties.join(', ')}`);
+    
+    // 检查缺少的属性
+    const missingProperties = requiredProperties.filter(
+      prop => !existingProperties.includes(prop)
+    );
+    
+    return missingProperties;
+  } catch (error: any) {
+    console.error(`检查数据库属性失败: ${error.message}`);
+    if (error.response) {
+      console.error(`状态码: ${error.response.status}`);
+      console.error(`响应: ${JSON.stringify(error.response.data)}`);
+    }
+    
+    // 如果无法检查，返回空数组以避免阻止同步
+    return [];
+  }
+}
 
 /**
  * 格式化阅读时间，将秒数转换为可读格式

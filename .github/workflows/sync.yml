@@ -16,6 +16,8 @@ jobs:
 
     steps:
       # 检出主分支（包含代码）
+      # 注意: 当原仓库更新数据库模板时，远程分支的fork会自动检测到变更
+      # 并会强制执行全量同步，以确保新模板的内容正确更新
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -98,19 +100,33 @@ jobs:
       # 将更新的同步状态保存到data分支
       - name: Update sync state in data branch
         run: |
-          mkdir -p .data-branch/data
+          mkdir -p .data-branch/data/sync-state
+          # 确保同步状态目录存在
+          mkdir -p main-branch/data/sync-state
+          
+          # 复制所有数据文件，包括同步状态和数据库版本文件
           cp -r main-branch/data/* .data-branch/data/ 2>/dev/null || true
+          
           cd .data-branch
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           # 重新设置remote以使用token认证
           git remote set-url origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          
+          # 添加所有数据文件，包括数据库版本文件
           git add data/
           git status
+          
           if git diff --staged --quiet; then
-            echo "同步状态没有变化"
+            echo "数据没有变化"
           else
+            # 检查数据库版本是否已更新
+            if [ -f "data/sync-state/db-version.json" ]; then
+              echo "数据库版本文件已更新"
+              cat data/sync-state/db-version.json
+            fi
+            
             echo "同步状态有更新，提交到data分支"
-            git commit -m "更新同步状态 [skip ci]"
+            git commit -m "更新同步状态和数据库版本 [skip ci]"
             git push origin data
           fi
